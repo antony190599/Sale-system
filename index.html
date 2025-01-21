@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Productos, Clientes y Ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">Productos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients" type="button" role="tab" aria-controls="clients" aria-selected="false">Clientes</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales" type="button" role="tab" aria-controls="sales" aria-selected="false">Ventas</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <h2 class="text-primary">Registrar Producto</h2>
+                        <form id="productForm" class="bg-light p-3 rounded shadow-sm">
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="productName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productPrice" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="productPrice" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productStock" class="form-label">Stock Inicial</label>
+                                <input type="number" class="form-control" id="productStock" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
+                    </div>
+                    <div class="col-md-8">
+                        <h2 class="text-primary">Listado de Productos</h2>
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productList">
+                                <!-- Aquí se agregarán los productos -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="clients" role="tabpanel" aria-labelledby="clients-tab">
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <h2 class="text-primary">Registrar Cliente</h2>
+                        <form id="clientForm" class="bg-light p-3 rounded shadow-sm">
+                            <div class="mb-3">
+                                <label for="clientName" class="form-label">Nombre del Cliente</label>
+                                <input type="text" class="form-control" id="clientName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="clientEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="clientEmail" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
+                    </div>
+                    <div class="col-md-8">
+                        <h2 class="text-primary">Listado de Clientes</h2>
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientList">
+                                <!-- Aquí se agregarán los clientes -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <h2 class="text-primary">Registrar Venta</h2>
+                        <form id="saleForm" class="bg-light p-3 rounded shadow-sm">
+                            <div class="mb-3">
+                                <label for="saleClient" class="form-label">Cliente</label>
+                                <select class="form-control" id="saleClient" required>
+                                    <!-- Aquí se agregarán los clientes -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="saleProduct" class="form-label">Producto</label>
+                                <select class="form-control" id="saleProduct" required>
+                                    <!-- Aquí se agregarán los productos -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="saleQuantity" class="form-label">Cantidad</label>
+                                <input type="number" class="form-control" id="saleQuantity" required>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="addProduct">Agregar Producto</button>
+                            <h3 class="mt-3">Productos en la Venta</h3>
+                            <ul class="list-group" id="saleProductList">
+                                <!-- Aquí se agregarán los productos de la venta -->
+                            </ul>
+                            <h3 class="mt-3">Total: $<span id="saleTotal">0.00</span></h3>
+                            <button type="submit" class="btn btn-success">Confirmar Venta</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/models/Customer.js"></script>
+    <script src="js/models/Product.js"></script>
+    <script src="js/models/Sale.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
