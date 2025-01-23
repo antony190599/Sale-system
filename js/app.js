@@ -41,15 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
         products.push({ name: productName, price: productPrice, stock: productStock });
         updateProductOptions();
 
-        productRow.querySelector('.update-stock').addEventListener('click', () => {
-            const newStock = prompt('Ingrese el nuevo stock:', productStock);
-            if (newStock !== null) {
-                productRow.cells[2].innerText = newStock;
-            }
+        const stockCell = productRow.cells[2]; // Celda del stock
+        const updateStockButton = productRow.querySelector('.update-stock');
+
+        // Evento para el botón "Actualizar Stock"
+        updateStockButton.addEventListener('click', () => {
+            const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+            offcanvas.show();
+
+            document.getElementById('stockInput').value = stockCell.textContent;
+
+            // Configurar el botón de guardar dentro del offcanvas
+            const saveButton = document.getElementById('saveStock');
+            saveButton.onclick = () => {
+                const newStock = document.getElementById('stockInput').value;
+                stockCell.textContent = newStock; // Actualizar el valor en la tabla
+                offcanvas.hide(); // Cerrar el offcanvas
+            };
         });
 
         productForm.reset();
     });
+
+    
 
     clientForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -144,3 +158,50 @@ document.addEventListener('DOMContentLoaded', () => {
         saleTotal.textContent = total.toFixed(2);
     }
 });
+
+
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+
+searchButton.onclick = () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const rows = productList.getElementsByTagName("tr")
+
+    for (let i = 0; i < rows.length; i++) {
+
+        const productName = rows[i].children[0].textContent.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+
+    }
+
+
+}
+
+const sortButton = document.getElementById("sortButton");
+let isAscendent = true;
+
+sortButton.onclick = () => {
+    const rows = Array.from(productList.getElementsByTagName("tr"));
+    rows.sort((rowA, rowB) => {
+        const stockA = +rowA.children[1].textContent;
+        const stockB = +rowB.children[2].textContent;
+    
+        if (isAscendent) {
+            return stockA - stockB;
+        } else {
+            return stockB - stockA;
+        }
+    })
+
+    //Alterar el orden en el proximo click
+    isAscendent = !isAscendent;
+
+    //Limpiar tabla y agregar filas
+    productList.innerHTML = "";
+    rows.forEach(row =>
+        productList.appendChild(row));
+    }
